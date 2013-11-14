@@ -204,43 +204,28 @@ function readKeePassFile(dataView, filePasswords) {
     var xmlData = zip_inflate(gzipData);
     assert(xmlData.indexOf("<?xml") == 0, "XML data is not valid");
     var xml = (new DOMParser()).parseFromString(xmlData, "text/xml");
-    var xmlEntries = evaluateXPath(xml, "//Root")[0];
-    var keepassData = new Array();
-    function keepassGroup() {
-        var name;
-        var groups = new Array();
-        var entries = new Array();
+    function keepassGroup(name) {
+        this.name = name;
+        this.entries = [];
     }
-    function keepassEntry() {
-        var keys = new Array();
-        var values = new Array();
-    }
-    var xmlGroups1 = evaluateXPath(xmlEntries, "/Group");
-    for (var i in xmlGroups1) {
-        var group1 = new keepassGroup();
-        group1.name = evaluateXPath(xmlGroups1[i], "/Name");
-
-        var xmlGroups2 = evaluateXPath(xmlGroups1[i], "/Group");
-        for (var i in xmlGroups2) {
-            var group2 = new keepassGroup();
-            group2.name = evaluateXPath(xmlGroups2[i], "/Name");
-
-            var xmlEntries3 = evaluateXPath(xmlGroups2[i], "/Entry");
-            for (var i in xmlEntries3) {
-                var entry3 = new keepassEntry();
-                entry3.keys = evaluateXPath(xmlEntries3[i], "/String/Key");
-                entry3.values = evaluateXPath(xmlEntries3[i], "/String/Value");
-                group2.entries.push(entry3);
+    var groups = [];
+    var xmlGroups = evaluateXPath(xml, "//Root/Group/Group");
+    for (var i in xmlGroups) {
+        var g = new keepassGroup(evaluateXPath(xmlGroups[i], "Name")[0].textContent);
+        var xmlEntries = evaluateXPath(xmlGroups[i], "//Entry");
+        for (var j in xmlEntries) {
+            var keys = evaluateXPath(xmlEntries[j], "String/Key");
+            var values = evaluateXPath(xmlEntries[j], "String/Value");
+            assert(keys.length == values.length, "different key and value sizes");
+            var e = {};
+            for (var k in keys) {
+                key = keys[k].textContent;
+                value = values[k].textContent;
+                e[key] = value;
             }
-            group1.groups.push(group2);
+            g.entries.push(e);
         }
-        var xmlEntries2 = evaluateXPath(xmlGroups1[i], "/Entry");
-        for (var i in xmlEntries2) {
-            var entry2 = new keepassEntry();
-            entry2.keys = evaluateXPath(xmlEntries2[i], "/String/Key");
-            entry2.values = evaluateXPath(xmlEntries2[i], "/String/Value");
-            group1.entries.push(entry2);
-        }
-        keepassData.push(group1);
+        groups.push(g);
     }
+    return groups;
 }
