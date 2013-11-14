@@ -197,7 +197,7 @@ function readKeePassFile(dataView, filePasswords) {
     var xmlGroups = evaluateXPath(xml, "//Root/Group/Group");
     for (var i in xmlGroups) {
         var g = new keepassGroup(evaluateXPath(xmlGroups[i], "Name")[0].textContent);
-        var xmlEntries = evaluateXPath(xmlGroups[i], "//Entry");
+        var xmlEntries = evaluateXPath(xmlGroups[i], "Entry");
         for (var j in xmlEntries) {
             var keys = evaluateXPath(xmlEntries[j], "String/Key");
             var values = evaluateXPath(xmlEntries[j], "String/Value");
