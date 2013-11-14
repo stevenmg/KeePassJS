@@ -1,24 +1,9 @@
 /*
-
-readKeePassFile(dataView, filePasswords):
-
-  Parameters:
-
-    * dataView: a jDataView instance of the byte array
-                representing a KeePass file
-    * filePasswords: the passwords (array of strings) to open this file
-
-  Returns: An array of objects whose fields are:
-
-    * UserName
-    * Password
-    * Notes
-    * Title
-    * URL
-
-Copyright 2013 Nam T. Nguyen
+Original Copyright 2013 Nam T. Nguyen
 Distributed under the GPL license version 2 or later.
 
+Changes Copyright 2013 Steven M. Glick
+Distributed under the GPL v3 license.
 */
 
 EndOfHeader = 0;
@@ -40,10 +25,6 @@ function assert(condition, message) {
 }
 
 // copied from https://developer.mozilla.org/en-US/docs/Using_XPath
-// Evaluate an XPath expression aExpression against a given DOM node
-// or Document object (aNode), returning the results as an array
-// thanks wanderingstan at morethanwarm dot mail dot com for the
-// initial work.
 function evaluateXPath(aNode, aExpr) {
     var xpe = new XPathEvaluator();
     var nsResolver = xpe.createNSResolver(aNode.ownerDocument == null ?
@@ -96,6 +77,10 @@ function readKeyFile(dataView) {
     return key_data;
 }
 
+/*Parameters:
+    * dataView: a jDataView instance of the byte array
+                representing a KeePass file
+    * filePasswords: the passwords (array of strings) to open this file*/
 function readKeePassFile(dataView, filePasswords) {
     var sig1 = dataView.getUint32();
     var sig2 = dataView.getUint32();

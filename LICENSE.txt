@@ -1,0 +1,7 @@
+KeePassJS Copyright 2013 Steven M. Glick
+Distributed under GPL v3 license.
+Liscense text can be found here: https://www.gnu.org/licenses/gpl-3.0.html
+
+Some parts of this software may be copywritten and/or subliscensed by their owners.
+This project is forked from BrowsePass (c) 2013 Nam T. Nguyen.
+That project can be found here: http://techualization.blogspot.com/2013/09/introducing-browsepass-keepass-on-web.html

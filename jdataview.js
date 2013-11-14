@@ -1,4 +1,3 @@
-//
 // jDataView by Vjeux <vjeuxx@gmail.com> - Jan 2010
 // Continued by RReverser <me@rreverser.com> - Feb 2013
 //
