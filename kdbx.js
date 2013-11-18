@@ -188,9 +188,12 @@ function readKeePassFile(dataView, filePasswords) {
     gzipData = gzipData.substring(10);
     var xmlData = zip_inflate(gzipData);
     assert(xmlData.indexOf("<?xml") == 0, "XML data is not valid");
+    var xml = (new DOMParser()).parseFromString(xmlData, "text/xml");
+    var keepassEntries = new Array();
+    var entries = evaluateXPath(xml, "//Entry");
 
     var hashedProtectedStreamKey = CryptoJS.SHA256(
-    CryptoJS.enc.Latin1.parse(header[ProtectedStreamKey]));
+      CryptoJS.enc.Latin1.parse(header[ProtectedStreamKey]));
     hashedProtectedStreamKey = hashedProtectedStreamKey.toString(
       CryptoJS.enc.Latin1);
     assert(hashedProtectedStreamKey.length == 32,
@@ -202,42 +205,40 @@ function readKeePassFile(dataView, filePasswords) {
     var iv = new Uint8Array([0xE8, 0x30, 0x09, 0x4B, 0x97, 0x20, 0x5D, 0x2A]);
     var salsa = new Salsa20(salsaKey, iv);
 
-    var xml = (new DOMParser()).parseFromString(xmlData, "text/xml");
-    function keepassGroup(name) {
-        this.name = name;
-        this.entries = [];
-    }
-    var skip_keys = ["KPRPC JSON"];
-    var groups = [];
-    var xmlGroups = evaluateXPath(xml, "//Root/Group/Group");
-    for (var i in xmlGroups) {
-        var g = new keepassGroup(evaluateXPath(xmlGroups[i], "Name")[0].textContent);
-        var xmlEntries = evaluateXPath(xmlGroups[i], "Entry");
-        for (var j in xmlEntries) {
-            var keys = evaluateXPath(xmlEntries[j], "String/Key");
-            var values = evaluateXPath(xmlEntries[j], "String/Value");
-            assert(keys.length == values.length, "different key and value sizes");
-            var e = {};
-            for (var k in keys) {
-                if ($.inArray(keys[k].textContent, skip_keys) > -1) {
-                    continue;
+    for (var i in entries) {
+        var keys = evaluateXPath(entries[i], "String/Key");
+        var values = evaluateXPath(entries[i], "String/Value");
+        assert(keys.length == values.length, "different key and value sizes");
+        var properties = {};
+        for (var j in keys) {
+            var value = values[j].textContent;
+            if (values[j].getAttribute("Protected") == "True") {
+                value = atob(value);
+                var xorbuf = salsa.getBytes(value.length);
+                var r = new Array();
+                for (var k = 0; k < value.length; ++k) {
+                    r[k] = String.fromCharCode(value.charCodeAt(k) ^ xorbuf[k]);
                 }
-                key = keys[k].textContent;
-                value = values[k].textContent;
-                if (values[k].getAttribute("Protected") == "True") {
-                    value = atob(value);
-                    var xorbuf = salsa.getBytes(value.length);
-                    var r = new Array();
-                    for (var l = 0; l < value.length; ++l) {
-                        r[l] = String.fromCharCode(value.charCodeAt(l) ^ xorbuf[l]);
-                    }
-                    value = r.join("");
-                }
-                e[key] = value;
+                value = r.join("");
             }
-            g.entries.push(e);
+            properties[keys[j].textContent] = value;
         }
-        groups.push(g);
+        if (entries[i].parentNode.nodeName == "History") {
+            continue; // ignore History
+        }
+        properties["Group"] = evaluateXPath(entries[i].parentNode, "Name")[0].textContent;
+        keepassEntries.push(properties);
+    }
+    var keepassData = [getGroups(keepassEntries), keepassEntries];
+    return keepassData;
+}
+
+function getGroups(entries) {
+    var groups = [];
+    for (var i in entries) {
+        if ($.inArray(entries[i]["Group"], groups) == -1) {
+            groups.push(entries[i]["Group"]);
+        }
     }
     return groups;
 }
