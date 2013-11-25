@@ -21,12 +21,12 @@
 
 
     <style>
-        .ui-tabs-vertical { width: 55em; }
-        .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+        .ui-tabs-vertical { position: relative; }
+        .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; width: 12em; float:left; }
         .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
         .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
         .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
-        .ui-tabs-vertical .ui-tabs-panel { padding: .1em; float: right; width: 42em; }
+        .ui-tabs-vertical .ui-tabs-panel { padding: .1em; margin-left: 13em; }
     </style>
     <script type="text/javascript">
         INPUT_NO_INPUT = -1;
@@ -83,6 +83,9 @@
         function show_groups(data) {
             var groups = data[0];
             var entries = data[1];
+            var groups_html = document.createElement("ul");
+            groups_html.id = "groups";
+            $("#tabs").append(groups_html);
             for (var i in groups) {
                 var group = groups[i];
                 //Create tab
@@ -91,7 +94,7 @@
                 tabLink.setAttribute("href", "#" + group);
                 tabLink.innerHTML = group;
                 tab.appendChild(tabLink);
-                $("#groups").append(tab);
+                groups_html.appendChild(tab);
                 //Create tab content
                 var div = document.createElement("div");
                 div.setAttribute("id", group);
@@ -122,12 +125,14 @@
                 var tbody = document.createElement("tbody");
                 table.appendChild(tbody);
 
-                for (var key in entry) {
+                var display_keys = ["Title", "URL", "UserName", "Password", "Notes"];
+
+                for (var key in display_keys) {
                     var row = document.createElement("tr");
                     tbody.appendChild(row);
-                    var value = entry[key];
+                    var value = entry[display_keys[key]];
                     var keyCell = document.createElement("td");
-                    keyCell.appendChild(document.createTextNode(key));
+                    keyCell.appendChild(document.createTextNode(display_keys[key]));
                     var valueCell = document.createElement("td");
                     valueCell.appendChild(document.createTextNode(value));
 
@@ -267,35 +272,23 @@
                 }
             };
 
-            $("#load_unload").button( {
+            $("#load_go").button( {
                 label: "Load",
                 icons: {
                     primary: "ui-icon-unlocked"
                 }
             } ).click(function() {
-                if ($(this).text() == "Load") {
-                	$(this).attr("disabled", true);
-                    if (current_input == INPUT_REMOTE_URL) {
-                        var url = $("#url").val();
-                        load_url(url);
-                    } else if (current_input == INPUT_LOCAL_FILE) {
-                        load_keepass();
-                    } else if (current_input == INPUT_DROPBOX_FILE) {
-                        load_dropbox_url(dropbox_url);
-                    }
-                } else {
-                    clear_password();
-                    $("#entries").empty();
-                    $("#groups").empty();
-                    $("#entries").accordion("destroy");
-                    var options = {
-                        label: "Load",
-                        icons: {
-                            primary: "ui-icon-unlocked"
-                        }
-                    };
-                    $(this).button(options);
+                if (current_input == INPUT_REMOTE_URL) {
+                    var url = $("#url").val();
+                    load_url(url);
+                } else if (current_input == INPUT_LOCAL_FILE) {
+                    load_keepass();
+                } else if (current_input == INPUT_DROPBOX_FILE) {
+                    load_dropbox_url(dropbox_url);
                 }
+                $("#load_file").css("display", "none");
+                $("#lock_file").css("display", "block");
+                $("#tabs").css("display", "block");
             } );
 
             $("#url").val(default_url);
@@ -326,7 +319,21 @@
                 if (e.keyCode == 13) {
                     $("#load_unload").click();
                 }
-            } );
+            });
+
+            $("#lock_file").button({
+                label: "Lock File",
+                icons: {
+                    primary: "ui-icon-locked"
+                }
+            }).click(function() {
+                $(this).css("display", "none");
+                $("#load_file").css("display", "block");
+                $("#tabs").empty();
+                $("#tabs").tabs("destroy");
+                $("#tabs").css("display", "none");
+                clear_password();
+            });
         }
 
         chooser_options = {
@@ -341,8 +348,12 @@
         };
     </script>
 </head>
-<body>
-    <div style="text-align: center;">
+<body style="margin-top:70px;">
+    <div id="header" style="position:fixed; height:50px; top:0px; left:0px; right:0px; background:lightgray;">
+        <h1 style="position:relative; left:10px; margin-top:5px;">KeePassJS</h1>
+        <button id="lock_file" style="float:right; position:absolute; top:5px; right:5px; display:none;">Lock File</button>
+    </div>
+    <div id="load_file" style="text-align: center; display:block;">
         <div id="url_option" style="display: inline-block; width: 398px; padding-top: 20px; padding-bottom: 20px; border: 1px dotted grey;">
             <input type="text" id="url" name="url" style="width: 360px;" value="" />
         </div>
@@ -359,13 +370,11 @@
         </div>
 
         <div>
-            <button id="load_unload">Load</button>
+            <button id="load_go">Load</button>
         </div>
     </div>
     <div id="tabs">
-        <ul id="groups">
 
-        </ul>
     </div>
 </body>
 </html>
