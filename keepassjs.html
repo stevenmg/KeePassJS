@@ -192,6 +192,7 @@
                 $("#load_unload").button(options);
             } catch (e) {
                 alert("Cannot open KeePass Database: " + e);
+                $("#lock_file").click();
             }
             $("#load_unload").removeAttr("disabled");
         }
