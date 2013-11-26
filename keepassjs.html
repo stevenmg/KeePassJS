@@ -106,6 +106,10 @@
             $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
         }
 
+        function copyString(string) {
+            window.prompt("Copy to clipboard: Ctrl+C, Enter\n(For Mac: Cmd+C, Enter)", string);
+        }
+
         function append_entries(entries, group) {
             for (var i in entries) {
                 var entry = entries[i];
@@ -121,7 +125,6 @@
                 var table = document.createElement("table");
                 $(table).css("width", "100%");
                 $("#" + group).append(table);
-                $(table).append("<thead><tr><th>Key</th><th>Value</th></tr></thead>");
 
                 var tbody = document.createElement("tbody");
                 table.appendChild(tbody);
@@ -135,8 +138,23 @@
                     var keyCell = document.createElement("td");
                     keyCell.appendChild(document.createTextNode(display_keys[key]));
                     var valueCell = document.createElement("td");
-                    valueCell.appendChild(document.createTextNode(value));
+                    if (display_keys[key] == "Password") {
+                        var passDisplay = document.createElement("input");
+                        passDisplay.setAttribute("type", "password");
+                        passDisplay.readOnly = "true";
+                        passDisplay.value = value;
+                        valueCell.appendChild(passDisplay);
 
+                        var btnCopy = document.createElement("button");
+                        btnCopy.setAttribute("pass", entry["Password"]);
+                        btnCopy.onclick = function () {
+                            copyString(this.getAttribute("pass"));
+                        };
+                        btnCopy.innerHTML = "Copy Password";
+                        valueCell.appendChild(btnCopy);
+                    } else {
+                        valueCell.appendChild(document.createTextNode(value));
+                    }
                     row.appendChild(keyCell);
                     row.appendChild(valueCell);
                 }
@@ -377,5 +395,6 @@
     <div id="tabs">
 
     </div>
+    <div id="clips" style="display:none;"></div>
 </body>
 </html>
