@@ -20,7 +20,6 @@
     <script src="kdbx.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="g6g08ofil9lkg8z"></script>
 
-
     <style>
         .ui-tabs-vertical { position: relative; }
         .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; width: 12em; float:left; }
@@ -29,6 +28,7 @@
         .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
         .ui-tabs-vertical .ui-tabs-panel { padding: .1em; margin-left: 13em; }
     </style>
+
     <script type="text/javascript">
         INPUT_NO_INPUT = -1;
         INPUT_REMOTE_URL = 0;
@@ -39,7 +39,7 @@
 
         var default_url = "Enter URL to your KDBX file here...";
 
-        var inputs = new Array(3)
+        var inputs = new Array(3);
         var current_input = INPUT_NO_INPUT; 
 
         var keyfile = null;
@@ -297,7 +297,7 @@
                 icons: {
                     primary: "ui-icon-unlocked"
                 }
-            } ).click(function() {
+            }).click(function () {
                 if (current_input == INPUT_REMOTE_URL) {
                     var url = $("#url").val();
                     load_url(url);
@@ -305,6 +305,9 @@
                     load_keepass();
                 } else if (current_input == INPUT_DROPBOX_FILE) {
                     load_dropbox_url(dropbox_url);
+                } else if (current_input == INPUT_NO_INPUT) {
+                    alert("No database selected");
+                    return;
                 }
                 $("#load_file").css("display", "none");
                 $("#lock_file").css("display", "block");
