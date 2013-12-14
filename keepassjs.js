@@ -3,8 +3,10 @@ INPUT_REMOTE_URL = 0;
 INPUT_LOCAL_FILE = 1;
 INPUT_DROPBOX_FILE = 2;
 
-var dropbox_url = "url";
+var last_timeout = 0;
+var current_timeout = 0;
 
+var dropbox_url = "url";
 var default_url = "Enter URL to your KDBX file here...";
 
 var inputs = new Array(3);
@@ -322,6 +324,16 @@ window.onload = function () {
         $("#tabs").tabs("destroy");
         $("#tabs").css("display", "none");
         clear_password();
+    });
+
+    $(document).click(function () {
+        last_timeout = current_timeout;
+        clearTimeout(last_timeout);
+        current_timeout = setTimeout("$('#lock_file').click();", 180000);
+    });
+
+    $(window).on("beforeunload", function () {
+        $("#lock_file").click();
     });
 }
 
