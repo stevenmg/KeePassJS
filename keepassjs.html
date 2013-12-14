@@ -23,9 +23,9 @@
     <script type="text/javascript" src="keepassjs.js"></script>
 </head>
 <body style="margin-top:70px;">
-    <div id="header" style="position:fixed; height:50px; top:0px; left:0px; right:0px; background:lightgray;">
-        <h1 style="position:relative; left:10px; margin-top:5px;">KeePassJS</h1>
-        <button id="lock_file" style="float:right; position:absolute; top:5px; right:5px; display:none;">Lock File</button>
+    <div id="header" style="position:fixed; height:60px; top:0px; left:0px; right:0px; z-index:10000;" class="ui-state-default">
+        <h1 style="position:relative; left:10px; margin-top:5px; font-family:'DejaVu Sans'; font-size:40px;">KeePassJS</h1>
+        <button id="lock_file" style="float:right; position:absolute; top:10px; right:10px; display:none;">Lock File</button>
     </div>
     <div id="load_file" style="text-align: center; display:block;">
         <div id="url_option" style="display: inline-block; width: 398px; padding-top: 20px; padding-bottom: 20px; border: 1px dotted grey;">
@@ -47,9 +47,8 @@
             <button id="load_go">Load</button>
         </div>
     </div>
-    <div id="tabs">
+    <div id="tabs" style="z-index:1">
 
     </div>
-    <div id="clips" style="display:none;"></div>
 </body>
 </html>
