@@ -123,6 +123,11 @@ function append_entries(entries, group) {
                 };
                 btnCopy.innerHTML = "Copy Password";
                 valueCell.appendChild(btnCopy);
+            } else if (display_keys[key] == "URL") {
+                var link = document.createElement("a");
+                link.setAttribute("href", value);
+                link.appendChild(document.createTextNode(value));
+                valueCell.appendChild(link);
             } else {
                 valueCell.appendChild(document.createTextNode(value));
             }
