@@ -5,10 +5,10 @@
     <link rel="SHORTCUT ICON" href="file_locked.ico" />
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="jquery/ui/jquery-ui.css"/>
+    <link rel="stylesheet" href="jquery/ui/smoothness/jquery-ui-1.10.3-min.css"/>
     <link rel="stylesheet" href="jquery/ui/jquery-ui-tabs-vertical.css"/>
-    <script src="jquery/jquery-1.9.1.js" type="text/javascript"></script>
-    <script src="jquery/ui/jquery-ui.js" type="text/javascript"></script>
+    <script src="jquery/jquery-2.0.3-min.js" type="text/javascript"></script>
+    <script src="jquery/ui/jquery-ui-1.10.3-min.js" type="text/javascript"></script>
     <script src="cryptojs/components/core-min.js" type="text/javascript"></script>
     <script src="cryptojs/components/cipher-core-min.js" type="text/javascript"></script>
     <script src="cryptojs/components/mode-ecb-min.js" type="text/javascript"></script>
