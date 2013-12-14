@@ -159,12 +159,10 @@ function load_keepass() {
                 primary: "ui-icon-locked"
             }
         };
-        $("#load_unload").button(options);
     } catch (e) {
         alert("Cannot open KeePass Database: " + e);
         $("#lock_file").click();
     }
-    $("#load_unload").removeAttr("disabled");
 }
 
 function load_url(url) {
@@ -181,7 +179,6 @@ function load_url(url) {
     };
     oReq.onerror = function (e) {
         alert("Cannot load URL " + url);
-        $("#load_unload").removeAttr("disabled");
     };
     oReq.send(null);
 }
@@ -200,7 +197,6 @@ function load_dropbox_url(url) {
     };
     oReq.onerror = function (e) {
         alert("Cannot load URL " + url);
-        $("#load_unload").removeAttr("disabled");
     };
     oReq.send(null);
 }
