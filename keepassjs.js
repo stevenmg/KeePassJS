@@ -310,7 +310,7 @@ window.onload = function () {
 
     $("#password").keyup(function (e) {
         if (e.keyCode == 13) {
-            $("#load_unload").click();
+            $("#load_go").click();
         }
     });
 
