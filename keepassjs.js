@@ -78,13 +78,6 @@ function show_groups(data) {
     $(document).tooltip();
 }
 
-function copyString(clip_string) {
-    $("#clipper").val(clip_string);
-    $("#clipper").select();
-    window.alert("Copy to clipboard: Ctrl+C, Enter\n(For Mac: Cmd+C, Enter)");
-    setTimeout(function () { $("#clipper").focus(); }, 1);
-}
-
 function append_entries(entries, group) {
     for (var i in entries) {
         var entry = entries[i];
