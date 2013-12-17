@@ -75,10 +75,14 @@ function show_groups(data) {
     $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
     $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
     entries = null;
+    $(document).tooltip();
 }
 
-function copyString(string) {
-    window.prompt("Copy to clipboard: Ctrl+C, Enter\n(For Mac: Cmd+C, Enter)", string);
+function copyString(clip_string) {
+    $("#clipper").val(clip_string);
+    $("#clipper").select();
+    window.alert("Copy to clipboard: Ctrl+C, Enter\n(For Mac: Cmd+C, Enter)");
+    setTimeout(function () { $("#clipper").focus(); }, 1);
 }
 
 function append_entries(entries, group) {
@@ -114,15 +118,15 @@ function append_entries(entries, group) {
                 passDisplay.setAttribute("type", "password");
                 passDisplay.readOnly = "true";
                 passDisplay.value = value;
+                passDisplay.title = "Hold mouse over password and press Ctr+C to copy (or OS equivalent)";
                 valueCell.appendChild(passDisplay);
-
-                var btnCopy = document.createElement("button");
-                btnCopy.setAttribute("pass", entry["Password"]);
-                btnCopy.onclick = function () {
-                    copyString(this.getAttribute("pass"));
+                passDisplay.onmouseover = function (e) {
+                    $("#clipper").val(this.value);
+                    $("#clipper").select();
                 };
-                btnCopy.innerHTML = "Copy Password";
-                valueCell.appendChild(btnCopy);
+                passDisplay.onmouseleave = function (e) {
+                    $("#clipper").val("");
+                };
             } else if (display_keys[key] == "URL") {
                 var link = document.createElement("a");
                 link.setAttribute("href", value);

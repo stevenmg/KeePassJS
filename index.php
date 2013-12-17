@@ -27,6 +27,7 @@
         <h1 style="position:relative; left:10px; margin-top:5px; font-family:'DejaVu Sans'; font-size:40px;">KeePassJS</h1>
         <button id="lock_file" style="float:right; position:absolute; top:10px; right:10px; display:none;">Lock File</button>
     </div>
+    <input id="clipper" type="text" style="z-index:1; display:block; position:fixed; top:0px; left:0px;" />
     <div id="load_file" style="text-align: center; display:block;">
         <div id="url_option" style="display: inline-block; width: 398px; padding-top: 20px; padding-bottom: 20px; border: 1px dotted grey;">
             <input type="text" id="url" name="url" style="width: 360px;" value="" />
@@ -52,4 +53,3 @@
     </div>
 </body>
 </html>
-
