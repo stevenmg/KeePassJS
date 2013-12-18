@@ -262,6 +262,16 @@ window.onload = function () {
         }
     };
 
+    $("#github_source").button({
+        label: "GitHub",
+        icons: {
+            primary: "ui-icon-wrench"
+        }
+    }).click(function () {
+        var win = window.open("https://github.com/stevenmg/KeePassJS");
+        win.focus();
+    });
+
     $("#load_go").button({
         label: "Load",
         icons: {

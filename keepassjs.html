@@ -25,7 +25,8 @@
 <body style="margin-top:70px;">
     <div id="header" style="position:fixed; height:60px; top:0px; left:0px; right:0px; z-index:10000;" class="ui-state-default">
         <h1 style="position:relative; left:10px; margin-top:5px; font-family:'DejaVu Sans'; font-size:40px;">KeePassJS</h1>
-        <button id="lock_file" style="float:right; position:absolute; top:10px; right:10px; display:none;">Lock File</button>
+        <button id="github_source" style="position:fixed; top:10px; right:10px; display:inline-block;">GitHub</button>
+        <button id="lock_file" style="position:fixed; top:10px; right:140px; display:none;">Lock File</button>
     </div>
     <input id="clipper" type="text" style="z-index:1; display:block; position:fixed; top:0px; left:0px;" />
     <div id="load_file" style="text-align: center; display:block;">
