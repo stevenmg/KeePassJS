@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="jquery/ui/smoothness/jquery-ui-1.10.3-min.css"/>
     <link rel="stylesheet" href="jquery/ui/jquery-ui-tabs-vertical.css"/>
+    <link rel="stylesheet" href="apprise/apprise-v2.css" />
     <script src="jquery/jquery-2.0.3-min.js" type="text/javascript"></script>
     <script src="jquery/ui/jquery-ui-1.10.3-min.js" type="text/javascript"></script>
     <script src="cryptojs/components/core-min.js" type="text/javascript"></script>
@@ -21,6 +22,7 @@
     <script src="kdbx.js" type="text/javascript"></script>
     <script type="text/javascript" src="dropins.js" id="dropboxjs" data-app-key="g6g08ofil9lkg8z"></script>
     <script type="text/javascript" src="keepassjs.js"></script>
+    <script type="text/javascript" src="apprise/apprise-v2.js"></script>
 </head>
 <body style="margin-top:70px;">
     <div id="header" style="position:fixed; height:60px; top:0px; left:0px; right:0px; z-index:10000;" class="ui-state-default">

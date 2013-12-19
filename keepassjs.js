@@ -164,7 +164,7 @@ function load_keepass() {
             }
         };
     } catch (e) {
-        alert("Cannot open KeePass Database: " + e);
+        Apprise("Cannot open KeePass Database: " + e);
         $("#lock_file").click();
     }
 }
@@ -182,7 +182,7 @@ function load_url(url) {
         }
     };
     oReq.onerror = function (e) {
-        alert("Cannot load URL " + url);
+        Apprise("Cannot load URL " + url);
     };
     oReq.send(null);
 }
@@ -200,7 +200,7 @@ function load_dropbox_url(url) {
         }
     };
     oReq.onerror = function (e) {
-        alert("Cannot load URL " + url);
+        Apprise("Cannot load URL " + url);
     };
     oReq.send(null);
 }
@@ -226,7 +226,7 @@ window.onload = function () {
                 select_input(INPUT_LOCAL_FILE);
             };
             reader.onerror = function (e) {
-                alert("Cannot load local file " + file.name);
+                Apprise("Cannot load local file " + file.name);
             };
             reader.readAsArrayBuffer(file);
         }
@@ -256,7 +256,7 @@ window.onload = function () {
                 $("#keyfile").css("background-color", "green");
             };
             reader.onerror = function (e) {
-                alert("Cannot load key file " + file.name);
+                Apprise("Cannot load key file " + file.name);
             };
             reader.readAsArrayBuffer(file);
         }
@@ -286,7 +286,7 @@ window.onload = function () {
         } else if (current_input == INPUT_DROPBOX_FILE) {
             load_dropbox_url(dropbox_url);
         } else if (current_input == INPUT_NO_INPUT) {
-            alert("No database selected");
+            Apprise("No database selected");
             return;
         }
         $("#load_file").css("display", "none");
