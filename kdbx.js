@@ -1,4 +1,4 @@
-/*
+/* @license
 Original Copyright 2013 Nam T. Nguyen
 Distributed under the GPL license version 2 or later.
 
