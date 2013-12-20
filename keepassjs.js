@@ -79,7 +79,9 @@ function show_groups(data) {
 }
 
 function append_entries(entries, group) {
+    var counter = 0;
     for (var i in entries) {
+        counter++;
         var entry = entries[i];
         if (entry["Group"] !== group) {
             continue;
@@ -100,6 +102,7 @@ function append_entries(entries, group) {
         var display_keys = ["Title", "URL", "UserName", "Password", "Notes"];
 
         for (var key in display_keys) {
+            
             var row = document.createElement("tr");
             tbody.appendChild(row);
             var value = entry[display_keys[key]];
@@ -111,7 +114,9 @@ function append_entries(entries, group) {
                 passDisplay.setAttribute("type", "password");
                 passDisplay.readOnly = "true";
                 passDisplay.value = value;
-                passDisplay.title = "Hold mouse over password and press Ctr+C to copy (or OS equivalent)";
+                passDisplay.title = "Hold mouse over password and press Ctrl+C to copy (or OS equivalent)";
+                var passID = "pass-" + group + "-" + counter;
+                passDisplay.id = passID;
                 valueCell.appendChild(passDisplay);
                 passDisplay.onmouseover = function (e) {
                     $("#clipper").val(this.value);
@@ -120,6 +125,19 @@ function append_entries(entries, group) {
                 passDisplay.onmouseleave = function (e) {
                     $("#clipper").val("");
                 };
+                var toggleDisplay = document.createElement("button");
+                toggleDisplay.innerHTML = "ABC";
+                toggleDisplay.setAttribute("pass_id", passID);
+                toggleDisplay.onclick = function (e) {
+                    if (this.innerHTML == "ABC") {
+                        $("#" + this.getAttribute("pass_id")).attr("type", "text");
+                        this.innerHTML = "***";
+                    } else {
+                        $("#" + this.getAttribute("pass_id")).attr("type", "password");
+                        this.innerHTML = "ABC";
+                    }
+                };
+                valueCell.appendChild(toggleDisplay);
             } else if (display_keys[key] == "URL") {
                 var link = document.createElement("a");
                 link.setAttribute("href", value);
