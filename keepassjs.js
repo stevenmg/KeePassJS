@@ -113,6 +113,11 @@ function append_entries(entries, group) {
                 var passDisplay = document.createElement("input");
                 passDisplay.setAttribute("type", "password");
                 passDisplay.readOnly = "true";
+                $(passDisplay).click(function () {
+                    $(this).blur();
+                    $("#clipper").select();
+                });
+                passDisplay.size = 50;
                 passDisplay.value = value;
                 passDisplay.title = "Hold mouse over password and press Ctrl+C to copy (or OS equivalent)";
                 var passID = "pass-" + group + "-" + counter;
