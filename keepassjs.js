@@ -134,13 +134,7 @@ function append_entries(entries, group) {
                 toggleDisplay.innerHTML = "ABC";
                 toggleDisplay.setAttribute("pass_id", passID);
                 toggleDisplay.onclick = function (e) {
-                    if (this.innerHTML == "ABC") {
-                        $("#" + this.getAttribute("pass_id")).attr("type", "text");
-                        this.innerHTML = "***";
-                    } else {
-                        $("#" + this.getAttribute("pass_id")).attr("type", "password");
-                        this.innerHTML = "ABC";
-                    }
+                    toggle_pass_display(this);
                 };
                 valueCell.appendChild(toggleDisplay);
             } else if (display_keys[key] == "URL") {
@@ -162,6 +156,17 @@ function append_entries(entries, group) {
         active: false,
         heightStyle: "content"
     });
+}
+
+function toggle_pass_display (button) {
+    var pass_id = button.getAttribute("pass_id");
+    if (button.innerHTML == "ABC") {
+        $("#" + pass_id).attr("type", "text");
+        button.innerHTML = "***";
+    } else {
+        $("#" + pass_id).attr("type", "password");
+        button.innerHTML = "ABC";
+    }
 }
 
 function load_keepass() {
