@@ -33,12 +33,14 @@ function select_input(input_type) {
             if (v.length > 0 && v != default_url) {
                 blocks["url_option"] = "green";
                 current_input = input_type;
+                create_dbx_chooser();
             }
             break;
         case INPUT_LOCAL_FILE:
             if (inputs[input_type] != null) {
                 blocks["file_option"] = "green";
                 current_input = input_type;
+                create_dbx_chooser();
             }
             break;
         case INPUT_DROPBOX_FILE:
@@ -233,7 +235,24 @@ function load_dropbox_url(url) {
     oReq.send(null);
 }
 
+function create_dbx_chooser() {
+    $("#dropbox_option").empty();
+    var dbx_btn = Dropbox.createChooseButton({
+        success: function (file) {
+            select_input(INPUT_DROPBOX_FILE);
+            dropbox_url = file[0].link;
+        },
+
+        linkType: "direct",
+        multiselect: false,
+        extensions: ['.kdbx'],
+    });
+    $("#dropbox_option").append(dbx_btn);
+}
+
 window.onload = function () {
+    create_dbx_chooser();
+
     var dropzone = document.getElementById("file_option");
 
     dropzone.ondragover = dropzone.ondragenter = function (event) {
@@ -376,14 +395,3 @@ window.onload = function () {
         $("#lock_file").click();
     });
 }
-
-chooser_options = {
-    success: function (file) {
-        select_input(INPUT_DROPBOX_FILE);
-        dropbox_url = file[0].link;
-    },
-
-    linkType: "direct",
-    multiselect: false,
-    extensions: ['.kdbx'],
-};

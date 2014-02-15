@@ -1,0 +1,13 @@
+.file_block {
+    height: 4em;
+    width: 398px;
+    border: 1px dotted grey;
+    line-height: 4em;
+    margin: 0 auto;
+}
+
+.header_button {
+    float:right;
+    margin-top:10px;
+    margin-right:10px;
+}
