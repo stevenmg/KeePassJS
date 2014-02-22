@@ -11,3 +11,8 @@
     margin-top:10px;
     margin-right:10px;
 }
+
+.group_content {
+    overflow-y:scroll;
+    height:100%;
+}

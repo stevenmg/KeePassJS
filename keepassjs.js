@@ -72,6 +72,7 @@ function show_groups(data) {
         var div = document.createElement("div");
         div.setAttribute("id", group);
         $("#tabs").append(div);
+        $("#" + group).addClass("group_content");
         append_entries(entries, group);
     }
     $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
