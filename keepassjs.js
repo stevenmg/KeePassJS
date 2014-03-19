@@ -338,6 +338,7 @@ window.onload = function () {
             return;
         }
         $("#load_file").css("display", "none");
+		$("#about").css("display", "none");
         $("#lock_file").css("display", "block");
         $("#tabs").css("display", "block");
     });
@@ -379,6 +380,7 @@ window.onload = function () {
         }
     }).click(function () {
         $(this).css("display", "none");
+		$("#about").css("display", "block");
         $("#load_file").css("display", "block");
         $("#tabs").empty();
         $("#tabs").tabs("destroy");

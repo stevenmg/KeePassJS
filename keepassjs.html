@@ -3,7 +3,7 @@
 <head>
     <title>KeePassJS</title>
     <link rel="SHORTCUT ICON" href="file_locked.ico" />
-
+    <meta name="google-site-verification" content="fWk4Jc-qlNB1EHMr8MkaruNfeG5QXXwynMCXm7VTw-o" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="jquery/ui/smoothness/jquery-ui-1.10.3-min.css"/>
     <link rel="stylesheet" href="jquery/ui/jquery-ui-tabs-vertical.css"/>
@@ -53,5 +53,16 @@
         </div>
     </div>
     <div id="tabs" style="z-index:1; display:none; position:fixed; bottom:5px; top:70px; right:5px; left:5px;"></div>
+	<div id="about" style="display: block; margin: 20px; border: 1px dotted grey;">
+		<div style="margin: 10px; font-family:'DejaVu Sans';">
+		<h2>About KeePassJS</h2>
+		<p>KeePassJS is an online file reader for KeePass 2.x. With support for loading files from Dropbox, URL, or local file it is now possible to access your KeePass Password Safe passwords anywhere at any time.</p>
+		<h3>What is KeePass?</h3>
+		<p>Keepass is a password manager for Windows, Linux, or Mac. It allows you to securely store your passwords in a central database making your online data more secure whithout the need to remember a large list of complicated passwords. For more information check out their <a href="http://keepass.info/">website</a>.</p>
+		<h3>Is KeePassJS secure?</h3>
+		<p>KeePassJS does not send any user data over the web. I (the developer) could not access your data even if I wanted to. This helps to keep your data more secure by reducing the risks of it getting into the wrong hands. If you need proof of this you can use offline mode in your browser. If your database is opened for more than three minutes without any activity the file will lock preventing unauthorized access if the user forgets to lock their database. All data from the KeePass file is discarded by this application as soon as it is no longer needed. No file data is stored after the file is locked.</p>
+		<p>This project is open source (Licensed under GPL v3) and anyone can review the code on the Github page. Please submit any bug reports or code improvements there.</p>
+		</div>
+	</div>
 </body>
 </html>
